@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <Feature Id="VolumeCorrectorFeature"
+             Title="!(loc.VolumeCorrectorFeature.Name)"
+             Description="!(loc.VolumeCorrectorFeature.Description)">
+      <ComponentGroupRef Id="VolumeCorrectorComponents"/>
+    </Feature>
+
+    <ComponentGroup Id="VolumeCorrectorComponents">
+      <ComponentRef Id="VolumeCorrectorComponent"/>
+      <ComponentRef Id="VolumeCorrectorRuComponent"/>
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="VolumeCorrectorComponent" Guid="B0DB683B-68BF-498B-A11F-B4ABB75219B3">
+        <!-- Main Program Files -->
+        <File Id="VolumeCorrector.exe" Name="VolumeCorrector.exe" Source="$(var.VolumeCorrector.TargetDir)"/>
+        <File Id="VolumeCorrector.exe.config" Name="VolumeCorrector.exe.config" Source="$(var.VolumeCorrector.TargetDir)"/>
+        <!-- NAudio Library -->
+        <File Id="NAudio.dll" Name="NAudio.dll" Source="$(var.VolumeCorrector.TargetDir)"/>
+      </Component>
+      <Directory Id="Resources.RU" Name="ru">
+        <Component Id="VolumeCorrectorRuComponent" Guid="43F768F3-DB84-41F9-95F5-491D010BB9CC">
+          <File Id="VolumeCorrector.resources.dll.RU" Name="VolumeCorrector.resources.dll" Source="$(var.VolumeCorrector.TargetDir)ru\"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>
