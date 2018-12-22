@@ -67,6 +67,8 @@ namespace VolumeCorrector.UI
                 volumeMonitor.Start();
             }
 
+            Settings.Default.Enabled = volumeMonitor.Enabled;
+            Settings.Default.Save();
             enableDisableButton.Checked = volumeMonitor.Enabled;
         }
 
