@@ -17,6 +17,8 @@ namespace VolumeCorrector.UI
         private readonly NotifyIcon icon;
         private readonly VolumeMonitor volumeMonitor;
 
+        private ToolStripMenuItem enableDisableButton;
+
         /// <summary>
         /// Creates new instance of <c>NotifyIconManager</c>.
         /// </summary>
@@ -33,7 +35,7 @@ namespace VolumeCorrector.UI
                 Visible = true,
                 ContextMenuStrip = CreateContextMenu()
             };
-            icon.DoubleClick += icon_DoubleClick;
+            icon.Click += icon_Click;
         }
 
         private Icon LoadManualIcon()
@@ -46,15 +48,37 @@ namespace VolumeCorrector.UI
             return Icon.FromHandle(Resources.VolumeIconAuto.GetHicon());
         }
 
+        private void icon_Click(object sender, EventArgs args)
+        {
+            if (args is MouseEventArgs mouseArgs && mouseArgs.Button == MouseButtons.Left)
+            {
+                StartStopCorrection();
+            }
+        }
+
+        private void StartStopCorrection()
+        {
+            if (volumeMonitor.Enabled)
+            {
+                volumeMonitor.Stop();
+            }
+            else
+            {
+                volumeMonitor.Start();
+            }
+
+            enableDisableButton.Checked = volumeMonitor.Enabled;
+        }
+
         private ContextMenuStrip CreateContextMenu()
         {
             var menu = new ContextMenuStrip();
 
             {
-                var startStopItem = new ToolStripMenuItem(Resources.Menu_EnableDisable, null, startStopItem_Click);
-                startStopItem.CheckOnClick = true;
-                startStopItem.Checked = false;
-                menu.Items.Add(startStopItem);
+                enableDisableButton = new ToolStripMenuItem(Resources.Menu_EnableDisable, null);
+                enableDisableButton.CheckOnClick = true;
+                enableDisableButton.Checked = volumeMonitor.Enabled;
+                menu.Items.Add(enableDisableButton);
 
                 var optionsItem = new ToolStripMenuItem(Resources.Menu_Options, Resources.Options, optionsItem_Click);
                 menu.Items.Add(optionsItem);
@@ -81,27 +105,6 @@ namespace VolumeCorrector.UI
         private void exitItem_Click(object sender, EventArgs args)
         {
             Application.Exit();
-        }
-
-        private void icon_DoubleClick(object sender, EventArgs args)
-        {
-            ShowOptionsForm();
-        }
-
-        private void startStopItem_Click(object sender, EventArgs args)
-        {
-            var item = (ToolStripMenuItem) sender;
-
-            if (volumeMonitor.Enabled)
-            {
-                volumeMonitor.Stop();
-            }
-            else
-            {
-                volumeMonitor.Start();
-            }
-
-            item.Checked = volumeMonitor.Enabled;
         }
 
         /// <summary>
@@ -153,7 +156,7 @@ namespace VolumeCorrector.UI
 
             CloseMainForm();
 
-            icon.DoubleClick -= icon_DoubleClick;
+            icon.Click -= icon_Click;
             icon.Dispose();
         }
     }
