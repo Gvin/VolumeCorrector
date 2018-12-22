@@ -134,7 +134,7 @@
     <value>Error</value>
   </data>
   <data name="Error_Text" xml:space="preserve">
-    <value>Error occured in the application. See error.log for details.</value>
+    <value>Error occured in the application. See Logs\error.log for details.</value>
   </data>
   <data name="LanguageChange_Caption" xml:space="preserve">
     <value>Restart Required</value>

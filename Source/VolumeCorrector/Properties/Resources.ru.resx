@@ -134,7 +134,7 @@
     <value>Ошибка</value>
   </data>
   <data name="Error_Text" xml:space="preserve">
-    <value>В приложении произошла ошибка. Проверьте error.log для уточнения деталей.</value>
+    <value>В приложении произошла ошибка. Проверьте Logs\error.log для уточнения деталей.</value>
   </data>
   <data name="LanguageChange_Caption" xml:space="preserve">
     <value>Требуется Рестарт</value>

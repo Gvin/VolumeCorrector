@@ -78,7 +78,14 @@ namespace VolumeCorrector.VolumeCorrection
         {
             while (enabled)
             {
-                CheckAndCorrectSound();
+                try
+                {
+                    CheckAndCorrectSound();
+                }
+                catch (Exception ex)
+                {
+                    ExceptionLogger.LogException(ex);
+                }
                 Thread.Sleep(CheckInterval);
             }
         }

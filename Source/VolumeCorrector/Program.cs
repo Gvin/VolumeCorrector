@@ -23,6 +23,7 @@ namespace VolumeCorrector
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                ExceptionLogger.ClearLogs();
 
                 using (var volumeMonitor = new VolumeMonitor(new MediumCorrectionStrategy()))
                 {
