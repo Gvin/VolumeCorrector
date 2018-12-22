@@ -75,9 +75,12 @@ namespace VolumeCorrector.UI
             var menu = new ContextMenuStrip();
 
             {
-                enableDisableButton = new ToolStripMenuItem(Resources.Menu_EnableDisable, null);
-                enableDisableButton.CheckOnClick = true;
-                enableDisableButton.Checked = volumeMonitor.Enabled;
+                enableDisableButton =
+                    new ToolStripMenuItem(Resources.Menu_EnableDisable, null, enableDisableButton_Click)
+                    {
+                        CheckOnClick = true,
+                        Checked = volumeMonitor.Enabled
+                    };
                 menu.Items.Add(enableDisableButton);
 
                 var optionsItem = new ToolStripMenuItem(Resources.Menu_Options, Resources.Options, optionsItem_Click);
@@ -90,6 +93,11 @@ namespace VolumeCorrector.UI
             }
 
             return menu;
+        }
+
+        private void enableDisableButton_Click(object sender, EventArgs args)
+        {
+            StartStopCorrection();
         }
 
         private void volumeMonitor_StatusChanged(object sender, EventArgs args)
