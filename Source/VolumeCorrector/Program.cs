@@ -28,7 +28,6 @@ namespace VolumeCorrector
                 {
                     using (var iconManager = new NotifyIconManager(volumeMonitor))
                     {
-                        iconManager.ShowOptionsForm();
                         Application.Run();
                     }
                 }
