@@ -142,6 +142,24 @@
   <data name="comboBoxLanguage.ToolTip" xml:space="preserve">
     <value>Язык приложения.</value>
   </data>
+  <data name="labelMaxLoudnessText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 13</value>
+  </data>
+  <data name="labelMaxLoudnessText.Text" xml:space="preserve">
+    <value>Максимальная Проигрываемая Громкость</value>
+  </data>
+  <data name="groupBoxLoudness.Text" xml:space="preserve">
+    <value>Проигрываемая Громкость</value>
+  </data>
+  <data name="labelMaxVolumeText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 13</value>
+  </data>
+  <data name="labelMaxVolumeText.Text" xml:space="preserve">
+    <value>Максимальная Громкость</value>
+  </data>
+  <data name="groupBoxVolume.Text" xml:space="preserve">
+    <value>Громкость</value>
+  </data>
   <data name="tabPageVolume.Text" xml:space="preserve">
     <value>Громкость</value>
   </data>
@@ -153,24 +171,6 @@
   </data>
   <data name="tabPageCommon.Text" xml:space="preserve">
     <value>Общее</value>
-  </data>
-  <data name="groupBoxLoudness.Text" xml:space="preserve">
-    <value>Проигрываемая Громкость</value>
-  </data>
-  <data name="labelMaxLoudnessText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 13</value>
-  </data>
-  <data name="labelMaxLoudnessText.Text" xml:space="preserve">
-    <value>Максимальная Проигрываемая Громкость</value>
-  </data>
-  <data name="groupBoxVolume.Text" xml:space="preserve">
-    <value>Громкость</value>
-  </data>
-  <data name="labelMaxVolumeText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 13</value>
-  </data>
-  <data name="labelMaxVolumeText.Text" xml:space="preserve">
-    <value>Максимальная Громкость</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Настройки Корректора Громкости</value>

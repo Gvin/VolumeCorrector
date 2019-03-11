@@ -1,4 +1,4 @@
-﻿namespace VolumeCorrector.UI
+﻿namespace VolumeCorrector.Views
 {
     partial class FormOptions
     {
@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOptions));
-            this.timerUpdateStatus = new System.Windows.Forms.Timer(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.buttonAutoDetect = new System.Windows.Forms.Button();
             this.trackBarMaxLoudness = new System.Windows.Forms.TrackBar();
@@ -58,11 +57,6 @@
             this.groupBoxVolume.SuspendLayout();
             this.tabPageCommon.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // timerUpdateStatus
-            // 
-            this.timerUpdateStatus.Enabled = true;
-            this.timerUpdateStatus.Tick += new System.EventHandler(this.timerUpdateStatus_Tick);
             // 
             // buttonAutoDetect
             // 
@@ -108,105 +102,93 @@
             // 
             // comboBoxLanguage
             // 
-            resources.ApplyResources(this.comboBoxLanguage, "comboBoxLanguage");
             this.comboBoxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxLanguage.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBoxLanguage, "comboBoxLanguage");
             this.comboBoxLanguage.Name = "comboBoxLanguage";
             this.toolTip.SetToolTip(this.comboBoxLanguage, resources.GetString("comboBoxLanguage.ToolTip"));
             // 
             // tabControl1
             // 
-            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabPageVolume);
             this.tabControl1.Controls.Add(this.tabPageCommon);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.toolTip.SetToolTip(this.tabControl1, resources.GetString("tabControl1.ToolTip"));
             // 
             // tabPageVolume
             // 
-            resources.ApplyResources(this.tabPageVolume, "tabPageVolume");
             this.tabPageVolume.BackColor = System.Drawing.SystemColors.Control;
             this.tabPageVolume.Controls.Add(this.groupBoxLoudness);
             this.tabPageVolume.Controls.Add(this.groupBoxVolume);
+            resources.ApplyResources(this.tabPageVolume, "tabPageVolume");
             this.tabPageVolume.Name = "tabPageVolume";
-            this.toolTip.SetToolTip(this.tabPageVolume, resources.GetString("tabPageVolume.ToolTip"));
             // 
             // groupBoxLoudness
             // 
-            resources.ApplyResources(this.groupBoxLoudness, "groupBoxLoudness");
             this.groupBoxLoudness.Controls.Add(this.buttonAutoDetect);
             this.groupBoxLoudness.Controls.Add(this.labelMaxLoudness);
             this.groupBoxLoudness.Controls.Add(this.labelMaxLoudnessText);
             this.groupBoxLoudness.Controls.Add(this.trackBarMaxLoudness);
             this.groupBoxLoudness.Controls.Add(this.labelLoudness);
             this.groupBoxLoudness.Controls.Add(this.progressBarLoudness);
+            resources.ApplyResources(this.groupBoxLoudness, "groupBoxLoudness");
             this.groupBoxLoudness.Name = "groupBoxLoudness";
             this.groupBoxLoudness.TabStop = false;
-            this.toolTip.SetToolTip(this.groupBoxLoudness, resources.GetString("groupBoxLoudness.ToolTip"));
             // 
             // labelMaxLoudness
             // 
             resources.ApplyResources(this.labelMaxLoudness, "labelMaxLoudness");
             this.labelMaxLoudness.Name = "labelMaxLoudness";
-            this.toolTip.SetToolTip(this.labelMaxLoudness, resources.GetString("labelMaxLoudness.ToolTip"));
             // 
             // labelMaxLoudnessText
             // 
             resources.ApplyResources(this.labelMaxLoudnessText, "labelMaxLoudnessText");
             this.labelMaxLoudnessText.Name = "labelMaxLoudnessText";
-            this.toolTip.SetToolTip(this.labelMaxLoudnessText, resources.GetString("labelMaxLoudnessText.ToolTip"));
             // 
             // labelLoudness
             // 
             resources.ApplyResources(this.labelLoudness, "labelLoudness");
             this.labelLoudness.Name = "labelLoudness";
-            this.toolTip.SetToolTip(this.labelLoudness, resources.GetString("labelLoudness.ToolTip"));
             // 
             // groupBoxVolume
             // 
-            resources.ApplyResources(this.groupBoxVolume, "groupBoxVolume");
             this.groupBoxVolume.Controls.Add(this.labelMaxVolume);
             this.groupBoxVolume.Controls.Add(this.labelMaxVolumeText);
             this.groupBoxVolume.Controls.Add(this.trackBarMaxVolume);
             this.groupBoxVolume.Controls.Add(this.labelVolume);
             this.groupBoxVolume.Controls.Add(this.progressBarVolume);
+            resources.ApplyResources(this.groupBoxVolume, "groupBoxVolume");
             this.groupBoxVolume.Name = "groupBoxVolume";
             this.groupBoxVolume.TabStop = false;
-            this.toolTip.SetToolTip(this.groupBoxVolume, resources.GetString("groupBoxVolume.ToolTip"));
             // 
             // labelMaxVolume
             // 
             resources.ApplyResources(this.labelMaxVolume, "labelMaxVolume");
             this.labelMaxVolume.Name = "labelMaxVolume";
-            this.toolTip.SetToolTip(this.labelMaxVolume, resources.GetString("labelMaxVolume.ToolTip"));
             // 
             // labelMaxVolumeText
             // 
             resources.ApplyResources(this.labelMaxVolumeText, "labelMaxVolumeText");
             this.labelMaxVolumeText.Name = "labelMaxVolumeText";
-            this.toolTip.SetToolTip(this.labelMaxVolumeText, resources.GetString("labelMaxVolumeText.ToolTip"));
             // 
             // labelVolume
             // 
             resources.ApplyResources(this.labelVolume, "labelVolume");
             this.labelVolume.Name = "labelVolume";
-            this.toolTip.SetToolTip(this.labelVolume, resources.GetString("labelVolume.ToolTip"));
             // 
             // tabPageCommon
             // 
-            resources.ApplyResources(this.tabPageCommon, "tabPageCommon");
             this.tabPageCommon.BackColor = System.Drawing.SystemColors.Control;
             this.tabPageCommon.Controls.Add(this.comboBoxLanguage);
             this.tabPageCommon.Controls.Add(this.labelLanguageText);
+            resources.ApplyResources(this.tabPageCommon, "tabPageCommon");
             this.tabPageCommon.Name = "tabPageCommon";
-            this.toolTip.SetToolTip(this.tabPageCommon, resources.GetString("tabPageCommon.ToolTip"));
             // 
             // labelLanguageText
             // 
             resources.ApplyResources(this.labelLanguageText, "labelLanguageText");
             this.labelLanguageText.Name = "labelLanguageText";
-            this.toolTip.SetToolTip(this.labelLanguageText, resources.GetString("labelLanguageText.ToolTip"));
             // 
             // FormOptions
             // 
@@ -216,7 +198,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormOptions";
-            this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             ((System.ComponentModel.ISupportInitialize)(this.trackBarMaxLoudness)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarMaxVolume)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -232,7 +213,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Timer timerUpdateStatus;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageVolume;

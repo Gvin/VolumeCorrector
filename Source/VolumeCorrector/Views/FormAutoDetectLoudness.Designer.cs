@@ -1,4 +1,4 @@
-﻿namespace VolumeCorrector.UI
+﻿namespace VolumeCorrector.Views
 {
     partial class FormAutoDetectLoudness
     {
@@ -42,7 +42,6 @@
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.toolTip.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // progressBarLoudness
             // 
@@ -84,7 +83,6 @@
             this.Name = "FormAutoDetectLoudness";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Shown += new System.EventHandler(this.FormAutoDetectLoudness_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

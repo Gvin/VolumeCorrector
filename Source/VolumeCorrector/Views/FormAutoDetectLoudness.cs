@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
+using VolumeCorrector.Model.VolumeCorrection;
 using VolumeCorrector.VolumeCorrection;
 using VolumeCorrector.VolumeCorrection.Strategies;
 
-namespace VolumeCorrector.UI
+namespace VolumeCorrector.Views
 {
-    public partial class FormAutoDetectLoudness : Form
+    public partial class FormAutoDetectLoudness : Form, IAutoDetectLoudnessView
     {
         private readonly VolumeMonitor monitor;
         private readonly MeasuringCorrectionStrategy strategy;

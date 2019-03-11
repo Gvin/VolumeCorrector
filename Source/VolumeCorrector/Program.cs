@@ -2,8 +2,10 @@
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using VolumeCorrector.Model.VolumeCorrection;
+using VolumeCorrector.Presenters;
 using VolumeCorrector.Properties;
-using VolumeCorrector.UI;
+using VolumeCorrector.Views;
 using VolumeCorrector.VolumeCorrection;
 using VolumeCorrector.VolumeCorrection.Strategies;
 
@@ -31,7 +33,7 @@ namespace VolumeCorrector
                     {
                         volumeMonitor.Start();
                     }
-                    using (var iconManager = new NotifyIconManager(volumeMonitor))
+                    using (var presenter = new NotifyIconPresenter(new NotifyIconView(), volumeMonitor))
                     {
                         Application.Run();
                     }
