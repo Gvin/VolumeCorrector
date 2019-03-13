@@ -20,6 +20,6 @@ namespace VolumeCorrector.Views
 
         event EventHandler CultureCodeChanged;
 
-        event EventHandler AutoDetectLoudnessClick;
+        void ForceBringToFront();
     }
 }

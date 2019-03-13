@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using VolumeCorrector.Model.VolumeCorrection;
 using VolumeCorrector.Properties;
-using VolumeCorrector.VolumeCorrection;
 
 namespace VolumeCorrector.Views
 {
@@ -98,13 +96,6 @@ namespace VolumeCorrector.Views
         {
             ExitClick?.Invoke(this, EventArgs.Empty);
         }
-
-//        private void PutFormToFront()
-//        {
-//            formOptions.Show();
-//            formOptions.WindowState = FormWindowState.Normal;
-//            formOptions.Activate();
-//        }
 
         /// <summary>
         /// Implements <see cref="IDisposable"/> interface.

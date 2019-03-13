@@ -49,7 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExceptionLogger.cs" />
-    <Compile Include="Presenters\AutoDetectLoudnessPresenter.cs" />
+    <Compile Include="InjectorConfiguration.cs" />
+    <Compile Include="Model\VolumeCorrection\IVolumeMonitorFactory.cs" />
+    <Compile Include="Model\VolumeCorrection\VolumeMonitorFactory.cs" />
+    <Compile Include="Presenters\INotifyIconPresenter.cs" />
+    <Compile Include="Presenters\IOptionsPresenter.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="Presenters\NotifyIconPresenter.cs" />
     <Compile Include="Presenters\OptionsPresenter.cs" />
@@ -57,12 +61,6 @@
       <DependentUpon>Resources.ru.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Views\FormAutoDetectLoudness.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\FormAutoDetectLoudness.Designer.cs">
-      <DependentUpon>FormAutoDetectLoudness.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FormOptions.cs">
       <SubType>Form</SubType>
@@ -73,7 +71,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\NotifyIconView.cs" />
-    <Compile Include="Views\IAutoDetectLoudnessView.cs" />
     <Compile Include="Views\INotifyIconView.cs" />
     <Compile Include="Views\IOptionsView.cs" />
     <Compile Include="Views\IView.cs" />
@@ -98,12 +95,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Views\FormAutoDetectLoudness.resx">
-      <DependentUpon>FormAutoDetectLoudness.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\FormAutoDetectLoudness.ru.resx">
-      <DependentUpon>FormAutoDetectLoudness.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,6 +126,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Injection\Injection.csproj">
+      <Project>{15b388ac-412d-4555-8271-8d685ed16573}</Project>
+      <Name>Injection</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

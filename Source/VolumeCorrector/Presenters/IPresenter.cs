@@ -1,11 +1,8 @@
-﻿using System.Windows.Forms;
+﻿using Gvin.Injection;
 
 namespace VolumeCorrector.Presenters
 {
-    public interface IPresenter
+    public interface IPresenter : IInjectable
     {
-        void Run();
-
-        DialogResult RunModal();
     }
 }

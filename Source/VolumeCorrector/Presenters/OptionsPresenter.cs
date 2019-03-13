@@ -5,18 +5,17 @@ using System.Windows.Forms;
 using VolumeCorrector.Model.VolumeCorrection;
 using VolumeCorrector.Properties;
 using VolumeCorrector.Views;
-using VolumeCorrector.VolumeCorrection;
 using Timer = System.Windows.Forms.Timer;
 
 namespace VolumeCorrector.Presenters
 {
-    public class OptionsPresenter : IDisposable, IPresenter
+    public class OptionsPresenter : IOptionsPresenter
     {
-        private const int MinMaxLoudnessValue = 10;
-
         private readonly IOptionsView view;
         private readonly IVolumeMonitor volumeMonitor;
         private readonly Timer volumeStatusTimer;
+
+        public event EventHandler Closed;
 
         public OptionsPresenter(IOptionsView view, IVolumeMonitor volumeMonitor)
         {
@@ -29,16 +28,15 @@ namespace VolumeCorrector.Presenters
             };
             volumeStatusTimer.Tick += volumeStatusTimer_Tick;
 
-            this.view.MaxVolumeChanged += view_MaxVolumeChanged;
-            this.view.MaxLoudnessChanged += view_MaxLoudnessChanged;
-            this.view.CultureCodeChanged += view_CultureCodeChanged;
-            this.view.AutoDetectLoudnessClick += view_AutoDelectLoudnessClick;
-            this.view.Closed += view_Closed;
-
             view.MaxVolume = volumeMonitor.MaxVolume;
             view.MaxLoudness = volumeMonitor.MaxLoudness;
             view.CultureCode = GetCurrentCultureCode();
             RefreshSoundMetrics();
+
+            this.view.MaxVolumeChanged += view_MaxVolumeChanged;
+            this.view.MaxLoudnessChanged += view_MaxLoudnessChanged;
+            this.view.CultureCodeChanged += view_CultureCodeChanged;
+            this.view.Closed += view_Closed;
         }
 
         private string GetCurrentCultureCode()
@@ -51,9 +49,9 @@ namespace VolumeCorrector.Presenters
             view.Show();
         }
 
-        public DialogResult RunModal()
+        public void BringToFront()
         {
-            return view.ShowDialog();
+            view.ForceBringToFront();
         }
 
         private void volumeStatusTimer_Tick(object sender, EventArgs args)
@@ -69,7 +67,7 @@ namespace VolumeCorrector.Presenters
 
         private void view_Closed(object sender, EventArgs args)
         {
-
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
         private void view_MaxVolumeChanged(object sender, EventArgs args)
@@ -102,28 +100,11 @@ namespace VolumeCorrector.Presenters
                 MessageBoxIcon.Warning);
         }
 
-        private void view_AutoDelectLoudnessClick(object sender, EventArgs args)
-        {
-            using (var presenter = new AutoDetectLoudnessPresenter(new FormAutoDetectLoudness()))
-            {
-                presenter.RunModal();
-                int newMaxLoudness = MinMaxLoudnessValue;
-                if (presenter.MaxLoudness >= MinMaxLoudnessValue)
-                {
-                    newMaxLoudness = presenter.MaxLoudness;
-                }
-
-                view.MaxLoudness = newMaxLoudness;
-                SetMaxLoudness(newMaxLoudness);
-            }
-        }
-
         public void Dispose()
         {
             view.MaxVolumeChanged -= view_MaxVolumeChanged;
             view.MaxLoudnessChanged -= view_MaxLoudnessChanged;
             view.CultureCodeChanged -= view_CultureCodeChanged;
-            view.AutoDetectLoudnessClick -= view_AutoDelectLoudnessClick;
             view.Closed -= view_Closed;
             volumeStatusTimer.Tick -= volumeStatusTimer_Tick;
         }

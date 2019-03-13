@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOptions));
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.buttonAutoDetect = new System.Windows.Forms.Button();
             this.trackBarMaxLoudness = new System.Windows.Forms.TrackBar();
             this.progressBarLoudness = new System.Windows.Forms.ProgressBar();
             this.trackBarMaxVolume = new System.Windows.Forms.TrackBar();
@@ -57,14 +56,6 @@
             this.groupBoxVolume.SuspendLayout();
             this.tabPageCommon.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // buttonAutoDetect
-            // 
-            resources.ApplyResources(this.buttonAutoDetect, "buttonAutoDetect");
-            this.buttonAutoDetect.Name = "buttonAutoDetect";
-            this.toolTip.SetToolTip(this.buttonAutoDetect, resources.GetString("buttonAutoDetect.ToolTip"));
-            this.buttonAutoDetect.UseVisualStyleBackColor = true;
-            this.buttonAutoDetect.Click += new System.EventHandler(this.buttonAutoDetect_Click);
             // 
             // trackBarMaxLoudness
             // 
@@ -126,7 +117,6 @@
             // 
             // groupBoxLoudness
             // 
-            this.groupBoxLoudness.Controls.Add(this.buttonAutoDetect);
             this.groupBoxLoudness.Controls.Add(this.labelMaxLoudness);
             this.groupBoxLoudness.Controls.Add(this.labelMaxLoudnessText);
             this.groupBoxLoudness.Controls.Add(this.trackBarMaxLoudness);
@@ -217,7 +207,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageVolume;
         private System.Windows.Forms.GroupBox groupBoxLoudness;
-        private System.Windows.Forms.Button buttonAutoDetect;
         private System.Windows.Forms.Label labelMaxLoudness;
         private System.Windows.Forms.Label labelMaxLoudnessText;
         private System.Windows.Forms.TrackBar trackBarMaxLoudness;

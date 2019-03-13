@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using Gvin.Injection;
 
 namespace VolumeCorrector.Views
 {
-    public interface IView
+    public interface IView : IInjectable
     {
         void Show();
 

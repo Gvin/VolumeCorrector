@@ -14,7 +14,6 @@ namespace VolumeCorrector.Views
         public event EventHandler MaxVolumeChanged;
         public event EventHandler MaxLoudnessChanged;
         public event EventHandler CultureCodeChanged;
-        public event EventHandler AutoDetectLoudnessClick;
 
         public FormOptions()
         {
@@ -109,6 +108,13 @@ namespace VolumeCorrector.Views
             }
         }
 
+        public void ForceBringToFront()
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+            Activate();
+        }
+
         private void trackBarMaxVolume_Scroll(object sender, EventArgs e)
         {
             MaxVolumeChanged?.Invoke(this, EventArgs.Empty);
@@ -117,11 +123,6 @@ namespace VolumeCorrector.Views
         private void trackBarMaxLoudness_Scroll(object sender, EventArgs e)
         {
             MaxLoudnessChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void buttonAutoDetect_Click(object sender, EventArgs e)
-        {
-            AutoDetectLoudnessClick?.Invoke(this, EventArgs.Empty);
         }
 
         private void comboBoxLanguage_SelectedValueChanged(object sender, EventArgs args)

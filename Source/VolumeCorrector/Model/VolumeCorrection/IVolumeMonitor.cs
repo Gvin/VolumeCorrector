@@ -1,6 +1,9 @@
-﻿namespace VolumeCorrector.Model.VolumeCorrection
+﻿using System;
+using Gvin.Injection;
+
+namespace VolumeCorrector.Model.VolumeCorrection
 {
-    public interface IVolumeMonitor
+    public interface IVolumeMonitor : IInjectable, IDisposable
     {
         int MaxVolume { get; set; }
 
