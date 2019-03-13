@@ -118,40 +118,61 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label1.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>433, 0</value>
+  <data name="buttonAutoDetect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 23</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>400, 39</value>
+  <data name="buttonAutoDetect.Text" xml:space="preserve">
+    <value>Автоопределение</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Включите какую-нибудь музыку/видео, которая для вас слишком громкая, и подождите некоторое время. После завершения наиболее громкой части, нажмите кнопку ниже.</value>
+  <data name="buttonAutoDetect.ToolTip" xml:space="preserve">
+    <value>Открывает автоматический детектор максимальной громкости звука.</value>
   </data>
-  <data name="progressBarLoudness.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 64</value>
+  <data name="trackBarMaxLoudness.ToolTip" xml:space="preserve">
+    <value>Уровень реакции на громкость звука. Чем выше это значение,тем быстрее будет реакция на громкость.</value>
   </data>
   <data name="progressBarLoudness.ToolTip" xml:space="preserve">
-    <value>Громкость текущего воспроизводимого звука.</value>
+    <value>Громкость текущего проигрываемого звука.</value>
   </data>
-  <data name="labelLoudness.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 90</value>
+  <data name="trackBarMaxVolume.ToolTip" xml:space="preserve">
+    <value>Максимально допустимая автоматическая системная Громкость.</value>
   </data>
-  <data name="labelLoudness.ToolTip" xml:space="preserve">
-    <value>Громкость текущего воспроизводимого звука.</value>
+  <data name="progressBarVolume.ToolTip" xml:space="preserve">
+    <value>Текущая системная Громкость.</value>
   </data>
-  <data name="buttonReady.Location" type="System.Drawing.Point, System.Drawing">
-    <value>166, 108</value>
+  <data name="comboBoxLanguage.ToolTip" xml:space="preserve">
+    <value>Язык приложения.</value>
   </data>
-  <data name="buttonReady.Text" xml:space="preserve">
-    <value>Готово</value>
+  <data name="labelMaxLoudnessText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 13</value>
   </data>
-  <data name="buttonReady.ToolTip" xml:space="preserve">
-    <value>Нажмите эту кнопку, когда измерения громкости будут окончены.</value>
+  <data name="labelMaxLoudnessText.Text" xml:space="preserve">
+    <value>Максимальная Проигрываемая Громкость</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>416, 144</value>
+  <data name="groupBoxLoudness.Text" xml:space="preserve">
+    <value>Проигрываемая Громкость</value>
+  </data>
+  <data name="labelMaxVolumeText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 13</value>
+  </data>
+  <data name="labelMaxVolumeText.Text" xml:space="preserve">
+    <value>Максимальная Громкость</value>
+  </data>
+  <data name="groupBoxVolume.Text" xml:space="preserve">
+    <value>Громкость</value>
+  </data>
+  <data name="tabPageVolume.Text" xml:space="preserve">
+    <value>Громкость</value>
+  </data>
+  <data name="labelLanguageText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="labelLanguageText.Text" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="tabPageCommon.Text" xml:space="preserve">
+    <value>Общее</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Автоматический Детектор Громкости</value>
+    <value>Настройки Корректора Громкости</value>
   </data>
 </root>

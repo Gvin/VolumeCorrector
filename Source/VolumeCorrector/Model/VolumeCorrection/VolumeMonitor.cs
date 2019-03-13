@@ -2,14 +2,15 @@
 using System.Threading;
 using System.Threading.Tasks;
 using NAudio.CoreAudioApi;
+using VolumeCorrector.VolumeCorrection;
 
-namespace VolumeCorrector.VolumeCorrection
+namespace VolumeCorrector.Model.VolumeCorrection
 {
     /// <summary>
     /// Monitors volume and loudness values.
     /// Can perform some actions on them if configured.
     /// </summary>
-    public class VolumeMonitor : IDisposable
+    public class VolumeMonitor : IDisposable, IVolumeMonitor
     {
         private const int CheckInterval = 10;
 
