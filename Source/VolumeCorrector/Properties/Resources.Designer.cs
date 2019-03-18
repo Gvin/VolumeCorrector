@@ -79,7 +79,7 @@ namespace VolumeCorrector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error occured in the application. See error.log for details..
+        ///   Looks up a localized string similar to Error occured in the application. See Logs\error.log for details..
         /// </summary>
         internal static string Error_Text {
             get {

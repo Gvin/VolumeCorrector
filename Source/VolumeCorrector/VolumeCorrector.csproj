@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
@@ -49,31 +52,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExceptionLogger.cs" />
+    <Compile Include="InjectorConfiguration.cs" />
+    <Compile Include="Model\ProgramSettings\ISettingsManager.cs" />
+    <Compile Include="Model\ProgramSettings\SettingsManager.cs" />
+    <Compile Include="Presenters\INotifyIconPresenter.cs" />
+    <Compile Include="Presenters\IOptionsPresenter.cs" />
+    <Compile Include="Presenters\IPresenter.cs" />
+    <Compile Include="Presenters\NotifyIconPresenter.cs" />
+    <Compile Include="Presenters\OptionsPresenter.cs" />
     <Compile Include="Properties\Resources.ru.Designer.cs">
       <DependentUpon>Resources.ru.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="UI\FormAutoDetectLoudness.cs">
+    <Compile Include="Views\FormOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\FormAutoDetectLoudness.Designer.cs">
-      <DependentUpon>FormAutoDetectLoudness.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\FormOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\FormOptions.Designer.cs">
+    <Compile Include="Views\FormOptions.Designer.cs">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\NotifyIconManager.cs" />
-    <Compile Include="VolumeCorrection\ICorrectionStrategy.cs" />
-    <Compile Include="VolumeCorrection\Strategies\EmptyCorrectionStrategy.cs" />
-    <Compile Include="VolumeCorrection\Strategies\MediumCorrectionStrategy.cs" />
-    <Compile Include="VolumeCorrection\Strategies\MeasuringCorrectionStrategy.cs" />
-    <Compile Include="VolumeCorrection\VolumeMonitor.cs" />
+    <Compile Include="Views\NotifyIconView.cs" />
+    <Compile Include="Views\INotifyIconView.cs" />
+    <Compile Include="Views\IOptionsView.cs" />
+    <Compile Include="Views\IView.cs" />
+    <Compile Include="Model\VolumeCorrection\ICorrectionStrategy.cs" />
+    <Compile Include="Model\VolumeCorrection\IVolumeMonitor.cs" />
+    <Compile Include="Model\VolumeCorrection\Strategies\EmptyCorrectionStrategy.cs" />
+    <Compile Include="Model\VolumeCorrection\Strategies\MediumCorrectionStrategy.cs" />
+    <Compile Include="Model\VolumeCorrection\VolumeMonitor.cs" />
     <EmbeddedResource Include="Properties\Resources.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.ru.Designer.cs</LastGenOutput>
@@ -89,16 +97,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI\FormAutoDetectLoudness.resx">
-      <DependentUpon>FormAutoDetectLoudness.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\FormAutoDetectLoudness.ru.resx">
-      <DependentUpon>FormAutoDetectLoudness.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\FormOptions.resx">
+    <EmbeddedResource Include="Views\FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\FormOptions.ru.resx">
+    <EmbeddedResource Include="Views\FormOptions.ru.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -126,6 +128,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Injection\Injection.csproj">
+      <Project>{15b388ac-412d-4555-8271-8d685ed16573}</Project>
+      <Name>Injection</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

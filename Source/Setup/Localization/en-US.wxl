@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	<String Id="Product.NetFramework46Warning">This setup requires the .NET Framework 4.6 or higher.</String>
+  <String Id="Product.LaunchOnSetupExit">Launch program</String>
+
+  <String Id="RegisterAutoStartDlg.Title">Auto Start Configuration</String>
+  <String Id="RegisterAutoStartDlg.Description">Check if application should start on Windows launch.</String>
+  <String Id="RegisterAutoStartDlg.Label">Start application with Windows</String>
+</WixLocalization>

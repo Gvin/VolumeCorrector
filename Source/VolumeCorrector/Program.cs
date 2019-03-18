@@ -2,10 +2,10 @@
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using Gvin.Injection;
+using VolumeCorrector.Model.VolumeCorrection;
+using VolumeCorrector.Presenters;
 using VolumeCorrector.Properties;
-using VolumeCorrector.UI;
-using VolumeCorrector.VolumeCorrection;
-using VolumeCorrector.VolumeCorrection.Strategies;
 
 namespace VolumeCorrector
 {
@@ -23,12 +23,22 @@ namespace VolumeCorrector
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                ExceptionLogger.ClearLogs();
 
-                using (var volumeMonitor = new VolumeMonitor(new MediumCorrectionStrategy()))
+                InjectorStorage.Initialize(new InjectorConfiguration());
+
+                using (var volumeMonitor = InjectorStorage.Current.Create<IVolumeMonitor>())
                 {
-                    using (var iconManager = new NotifyIconManager(volumeMonitor))
+                    if (Settings.Default.Enabled)
                     {
-                        iconManager.ShowOptionsForm();
+                        volumeMonitor.Start();
+                    }
+
+                    volumeMonitor.MaxVolume = Settings.Default.MaxVolume;
+                    volumeMonitor.MaxLoudness = Settings.Default.MaxLoudness;
+
+                    using (var presenter = InjectorStorage.Current.Create<INotifyIconPresenter>())
+                    {
                         Application.Run();
                     }
                 }
@@ -37,6 +47,10 @@ namespace VolumeCorrector
             {
                 ExceptionLogger.LogException(ex);
                 ShowErrorMessage();
+            }
+            finally
+            {
+                InjectorStorage.Clear();
             }
         }
 
