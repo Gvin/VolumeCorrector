@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using VolumeCorrector.Model.ProgramSettings;
 using VolumeCorrector.Model.VolumeCorrection;
 using VolumeCorrector.Properties;
 using VolumeCorrector.Views;
@@ -14,11 +15,13 @@ namespace VolumeCorrector.Presenters
         private readonly IOptionsView view;
         private readonly IVolumeMonitor volumeMonitor;
         private readonly Timer volumeStatusTimer;
+        private readonly ISettingsManager settings;
 
         public event EventHandler Closed;
 
-        public OptionsPresenter(IOptionsView view, IVolumeMonitor volumeMonitor)
+        public OptionsPresenter(IOptionsView view, IVolumeMonitor volumeMonitor, ISettingsManager settings)
         {
+            this.settings = settings;
             this.view = view;
             this.volumeMonitor = volumeMonitor;
             volumeStatusTimer = new Timer
@@ -73,8 +76,8 @@ namespace VolumeCorrector.Presenters
         private void view_MaxVolumeChanged(object sender, EventArgs args)
         {
             volumeMonitor.MaxVolume = view.MaxVolume;
-            Settings.Default.MaxVolume = view.MaxVolume;
-            Settings.Default.Save();
+            settings.MaxVolume = view.MaxVolume;
+            settings.Save();
         }
 
         private void view_MaxLoudnessChanged(object sender, EventArgs args)
@@ -85,14 +88,14 @@ namespace VolumeCorrector.Presenters
         private void SetMaxLoudness(int value)
         {
             volumeMonitor.MaxLoudness = value;
-            Settings.Default.MaxLoudness = value;
-            Settings.Default.Save();
+            settings.MaxLoudness = value;
+            settings.Save();
         }
 
         private void view_CultureCodeChanged(object sender, EventArgs args)
         {
-            Settings.Default.LanguageCode = view.CultureCode;
-            Settings.Default.Save();
+            settings.LanguageCode = view.CultureCode;
+            settings.Save();
 
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(view.CultureCode);
 

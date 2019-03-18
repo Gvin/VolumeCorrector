@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using NAudio.CoreAudioApi;
-using VolumeCorrector.VolumeCorrection;
 
 namespace VolumeCorrector.Model.VolumeCorrection
 {
@@ -10,7 +9,7 @@ namespace VolumeCorrector.Model.VolumeCorrection
     /// Monitors volume and loudness values.
     /// Can perform some actions on them if configured.
     /// </summary>
-    public class VolumeMonitor : IDisposable, IVolumeMonitor
+    public class VolumeMonitor : IVolumeMonitor
     {
         private const int CheckInterval = 10;
 
@@ -20,6 +19,8 @@ namespace VolumeCorrector.Model.VolumeCorrection
         private int maxVolume;
         private Task checkSoundTask;
         private bool enabled;
+        private float storedSystemVolume;
+        private bool systemVolumeStored;
 
         public event EventHandler StatusChanged;
 
@@ -31,6 +32,8 @@ namespace VolumeCorrector.Model.VolumeCorrection
 
             maxVolume = 100;
             maxLoudness = 100;
+            storedSystemVolume = 0;
+            systemVolumeStored = false;
         }
 
         public int Loudness => (int)Math.Round(loudness * 100);
@@ -72,7 +75,23 @@ namespace VolumeCorrector.Model.VolumeCorrection
             checkSoundTask.Dispose();
             checkSoundTask = null;
 
+            ResetSystemVolume();
+
             StatusChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ResetSystemVolume()
+        {
+            if (systemVolumeStored)
+            {
+                using (var device = GetCurrentAudioDevice())
+                {
+                    SetVolume(device, storedSystemVolume);
+                }
+
+                storedSystemVolume = 0;
+                systemVolumeStored = false;
+            }
         }
 
         private void CheckSound()
@@ -100,6 +119,12 @@ namespace VolumeCorrector.Model.VolumeCorrection
             {
                 loudness = GetCurrentLoudness(device);
                 volume = GetCurrentMasterVolume(device);
+
+                if (!systemVolumeStored)
+                {
+                    storedSystemVolume = volume;
+                    systemVolumeStored = true;
+                }
 
                 var targetVolume = correctionStrategy.GetTargetVolume(volume, loudness, realMaxVolume, realMaxLoudness);
                 SetVolume(device, targetVolume);
@@ -134,6 +159,7 @@ namespace VolumeCorrector.Model.VolumeCorrection
             enabled = false;
             checkSoundTask?.Wait();
             checkSoundTask?.Dispose();
+            ResetSystemVolume();
         }
     }
 }

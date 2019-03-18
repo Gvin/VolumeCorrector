@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
@@ -50,8 +53,8 @@
   <ItemGroup>
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="InjectorConfiguration.cs" />
-    <Compile Include="Model\VolumeCorrection\IVolumeMonitorFactory.cs" />
-    <Compile Include="Model\VolumeCorrection\VolumeMonitorFactory.cs" />
+    <Compile Include="Model\ProgramSettings\ISettingsManager.cs" />
+    <Compile Include="Model\ProgramSettings\SettingsManager.cs" />
     <Compile Include="Presenters\INotifyIconPresenter.cs" />
     <Compile Include="Presenters\IOptionsPresenter.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
@@ -78,7 +81,6 @@
     <Compile Include="Model\VolumeCorrection\IVolumeMonitor.cs" />
     <Compile Include="Model\VolumeCorrection\Strategies\EmptyCorrectionStrategy.cs" />
     <Compile Include="Model\VolumeCorrection\Strategies\MediumCorrectionStrategy.cs" />
-    <Compile Include="Model\VolumeCorrection\Strategies\MeasuringCorrectionStrategy.cs" />
     <Compile Include="Model\VolumeCorrection\VolumeMonitor.cs" />
     <EmbeddedResource Include="Properties\Resources.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -132,6 +134,9 @@
       <Project>{15b388ac-412d-4555-8271-8d685ed16573}</Project>
       <Name>Injection</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

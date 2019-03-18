@@ -34,6 +34,9 @@ namespace VolumeCorrector
                         volumeMonitor.Start();
                     }
 
+                    volumeMonitor.MaxVolume = Settings.Default.MaxVolume;
+                    volumeMonitor.MaxLoudness = Settings.Default.MaxLoudness;
+
                     using (var presenter = InjectorStorage.Current.Create<INotifyIconPresenter>())
                     {
                         Application.Run();
