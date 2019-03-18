@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gvin.Injection.Configuration;
+using VolumeCorrector.Model.ProgramSettings;
 using VolumeCorrector.Model.VolumeCorrection;
+using VolumeCorrector.Model.VolumeCorrection.Strategies;
 using VolumeCorrector.Presenters;
 using VolumeCorrector.Views;
-using VolumeCorrector.VolumeCorrection.Strategies;
 
 namespace VolumeCorrector
 {
@@ -21,7 +22,8 @@ namespace VolumeCorrector
                 {typeof(IOptionsPresenter), new InjectorMappingType{Type=typeof(OptionsPresenter)}},
                 {typeof(INotifyIconPresenter), new InjectorMappingType{Type=typeof(NotifyIconPresenter)}},
                 // Model
-                {typeof(IVolumeMonitor), new InjectorMappingType{Object = new VolumeMonitor(new MediumCorrectionStrategy())}}
+                {typeof(IVolumeMonitor), new InjectorMappingType{Object = new VolumeMonitor(new MediumCorrectionStrategy())}},
+                {typeof(ISettingsManager), new InjectorMappingType{Object = new SettingsManager()}}
             };
         }
     }

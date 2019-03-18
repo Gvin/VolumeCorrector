@@ -1,4 +1,4 @@
-﻿namespace VolumeCorrector.VolumeCorrection.Strategies
+﻿namespace VolumeCorrector.Model.VolumeCorrection.Strategies
 {
     public class MediumCorrectionStrategy : ICorrectionStrategy
     {

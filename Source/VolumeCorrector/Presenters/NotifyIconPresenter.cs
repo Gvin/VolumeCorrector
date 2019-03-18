@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using Gvin.Injection;
+using VolumeCorrector.Model.ProgramSettings;
 using VolumeCorrector.Model.VolumeCorrection;
-using VolumeCorrector.Properties;
 using VolumeCorrector.Views;
 
 namespace VolumeCorrector.Presenters
@@ -12,11 +12,13 @@ namespace VolumeCorrector.Presenters
         private readonly INotifyIconView view;
         private readonly IVolumeMonitor volumeMonitor;
         private readonly IInjector injector;
+        private readonly ISettingsManager settings;
 
         private IOptionsPresenter optionsPresenter;
 
-        public NotifyIconPresenter(INotifyIconView view, IVolumeMonitor volumeMonitor, IInjector injector)
+        public NotifyIconPresenter(INotifyIconView view, IVolumeMonitor volumeMonitor, ISettingsManager settings, IInjector injector)
         {
+            this.settings = settings;
             this.injector = injector;
             this.volumeMonitor = volumeMonitor;
 
@@ -64,8 +66,8 @@ namespace VolumeCorrector.Presenters
                 volumeMonitor.Start();
             }
 
-            Settings.Default.Enabled = volumeMonitor.Enabled;
-            Settings.Default.Save();
+            settings.Enabled = volumeMonitor.Enabled;
+            settings.Save();
 
             view.UpdateStatus(volumeMonitor.Enabled);
         }

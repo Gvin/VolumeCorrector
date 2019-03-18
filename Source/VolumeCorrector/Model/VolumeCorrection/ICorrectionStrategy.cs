@@ -1,6 +1,6 @@
-﻿using NAudio.CoreAudioApi;
+﻿using Gvin.Injection;
 
-namespace VolumeCorrector.VolumeCorrection
+namespace VolumeCorrector.Model.VolumeCorrection
 {
     public interface ICorrectionStrategy
     {

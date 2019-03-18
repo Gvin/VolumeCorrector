@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using VolumeCorrector.Properties;
@@ -23,8 +22,6 @@ namespace VolumeCorrector.Views
             Icon = System.Drawing.Icon.FromHandle(Resources.VolumeIcon.GetHicon());
 
             FillLanguageComboBox();
-
-            InitializeMaxValues();
         }
 
         private void FillLanguageComboBox()
@@ -38,12 +35,6 @@ namespace VolumeCorrector.Views
             comboBoxLanguage.Items.Add(russianLanguage);
 
             comboBoxLanguage.SelectedValueChanged += comboBoxLanguage_SelectedValueChanged;
-        }
-
-        private void InitializeMaxValues()
-        {
-            trackBarMaxVolume.Value = Settings.Default.MaxVolume;
-            trackBarMaxLoudness.Value = Settings.Default.MaxLoudness;
         }
 
         public int MaxVolume
@@ -117,11 +108,13 @@ namespace VolumeCorrector.Views
 
         private void trackBarMaxVolume_Scroll(object sender, EventArgs e)
         {
+            labelMaxVolume.Text = trackBarMaxVolume.Value.ToString();
             MaxVolumeChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void trackBarMaxLoudness_Scroll(object sender, EventArgs e)
         {
+            labelMaxLoudness.Text = trackBarMaxLoudness.Value.ToString();
             MaxLoudnessChanged?.Invoke(this, EventArgs.Empty);
         }
 
