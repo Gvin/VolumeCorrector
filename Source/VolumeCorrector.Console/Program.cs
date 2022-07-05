@@ -50,6 +50,8 @@ var application = builder.Build();
 var volumeService = application.Services.GetRequiredService<IVolumeService>();
 volumeService.Initialize();
 
+var volumeMonitor = application.Services.GetRequiredService<IVolumeMonitor>();
+
 var logger = application.Services.GetRequiredService<ILogger<Program>>();
 
 var processCancellationTokenSource = new CancellationTokenSource();
@@ -60,11 +62,18 @@ await application.StartAsync();
 
 Console.Clear();
 
-Console.CursorTop = 4;
-Console.CursorLeft = 1;
+Console.CursorTop = 5;
+Console.CursorLeft = 0;
 Console.CursorVisible = false;
 
-Console.WriteLine("Press ENTER to close the application.");
+Console.WriteLine(" Commands:");
+Console.WriteLine(" Esc - Exit");
+Console.WriteLine(" e - Enable");
+Console.WriteLine(" d - Disable");
+Console.WriteLine(" ^ - Inc. max Volume");
+Console.WriteLine(" v - Dec. max Volume");
+Console.WriteLine(" > - Inc. max Loudness");
+Console.WriteLine(" < - Dec. max Loudness");
 
 #pragma warning disable CS4014
 Task.Run(async () =>
@@ -73,7 +82,42 @@ Task.Run(async () =>
 });
 #pragma warning restore CS4014
 
-Console.ReadLine();
+while (true)
+{
+    var key = Console.ReadKey();
+
+    if (key.Key == ConsoleKey.Escape)
+    {
+        break;
+    }
+
+    if (key.Key == ConsoleKey.UpArrow)
+    {
+        volumeMonitor.MaxVolume = Math.Min(100, volumeMonitor.MaxVolume + 1);
+    } 
+    else if (key.Key == ConsoleKey.DownArrow)
+    {
+        volumeMonitor.MaxVolume = Math.Max(0, volumeMonitor.MaxVolume - 1);
+    }
+    else if (key.Key == ConsoleKey.LeftArrow)
+    {
+        volumeMonitor.MaxLoudness = Math.Max(0, volumeMonitor.MaxLoudness - 1);
+    }
+    else if (key.Key == ConsoleKey.RightArrow)
+    {
+        volumeMonitor.MaxLoudness = Math.Min(100, volumeMonitor.MaxLoudness + 1);
+    }
+    else if (key.Key == ConsoleKey.E)
+    {
+        volumeMonitor.Enabled = true;
+    }
+    else if (key.Key == ConsoleKey.D)
+    {
+        volumeMonitor.Enabled = false;
+    }
+}
+
+volumeMonitor.Enabled = false;
 
 processCancellationTokenSource.Cancel();
 
@@ -88,11 +132,18 @@ async Task UpdateConsoleInfo(CancellationToken token)
             var volume = (int)Math.Floor(volumeService.GetVolume() * 100);
             var loudness = (int)Math.Floor(volumeService.GetLoudness() * 100);
 
-            Console.CursorTop = 1;
-            Console.CursorLeft = 1;
-            Console.WriteLine($"Volume: {volume} Loudness: {loudness}               ");
+            Console.SetCursorPosition(0, 1);
 
-            await Task.Delay(TimeSpan.FromSeconds(1), token);
+            var statusText = volumeMonitor.Enabled ? "Enabled" : "Disabled";
+            Console.WriteLine($" Status: {statusText}     ");
+            Console.WriteLine($" Max Volume: {volumeMonitor.MaxVolume} Max Loudness: {volumeMonitor.MaxLoudness}   ");
+            Console.WriteLine($" Volume: {volume} Loudness: {loudness}               ");
+
+            Console.SetCursorPosition(0, 13);
+            Console.WriteLine("     ");
+            Console.SetCursorPosition(0, 13);
+
+            await Task.Delay(TimeSpan.FromMilliseconds(300), token);
         }
         catch (TaskCanceledException)
         {

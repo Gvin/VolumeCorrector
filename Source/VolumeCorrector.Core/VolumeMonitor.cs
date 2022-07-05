@@ -8,7 +8,6 @@ namespace VolumeCorrector.Core
     {
         private readonly IVolumeService _volumeService;
         private readonly ICorrectionStrategy _correctionStrategy;
-        private readonly VolumeCorrectorConfiguration _configuration;
         private bool _enabled;
         private float? _storedSystemVolume;
 
@@ -19,9 +18,17 @@ namespace VolumeCorrector.Core
         {
             _volumeService = volumeService;
             _correctionStrategy = correctionStrategy;
-            _configuration = options.Value;
             _storedSystemVolume = null;
+
+            MaxVolume = options.Value.MaxVolume;
+            MaxLoudness = options.Value.MaxLoudness;
+
+            Enabled = true;
         }
+
+        public int MaxVolume { get; set; }
+
+        public int MaxLoudness { get; set; }
 
         public bool Enabled
         {
@@ -47,17 +54,20 @@ namespace VolumeCorrector.Core
 
         public void Update()
         {
-            var volume = _volumeService.GetVolume();
-            var loudness = _volumeService.GetLoudness();
-
-            var realMaxVolume = _configuration.MaxVolume / 100f;
-            var realMaxLoudness = _configuration.MaxLoudness / 100f;
-
-            var targetVolume = _correctionStrategy.GetTargetVolume(volume, loudness, realMaxVolume, realMaxLoudness);
-
-            if (Math.Abs(targetVolume - volume) > float.Epsilon)
+            if (Enabled)
             {
-                _volumeService.SetVolume(targetVolume);
+                var volume = _volumeService.GetVolume();
+                var loudness = _volumeService.GetLoudness();
+
+                var realMaxVolume = MaxVolume / 100f;
+                var realMaxLoudness = MaxLoudness / 100f;
+
+                var targetVolume = _correctionStrategy.GetTargetVolume(volume, loudness, realMaxVolume, realMaxLoudness);
+
+                if (Math.Abs(targetVolume - volume) > float.Epsilon)
+                {
+                    _volumeService.SetVolume(targetVolume);
+                }
             }
         }
     }
