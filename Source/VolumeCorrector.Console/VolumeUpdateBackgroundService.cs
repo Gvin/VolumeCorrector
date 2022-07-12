@@ -28,8 +28,16 @@ public class VolumeUpdateBackgroundService : BackgroundService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _volumeService.Update();
-                _volumeMonitor.Update();
+                if (_volumeService.Initialized)
+                {
+                    await _volumeService.UpdateAsync();
+                    _volumeMonitor.Update();
+                }
+                else
+                {
+                    _logger.LogWarning("Tried to update volume but service is not initialized.");
+                }
+                
                 await Task.Delay(UpdateIntervalMilliseconds, stoppingToken);
             }
         }

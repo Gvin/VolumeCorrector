@@ -14,12 +14,50 @@ using VolumeCorrector.Core.Strategies;
 const string logMessageTemplate = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}";
 const string logFileName = "log.log";
 
-var builder = Host.CreateDefaultBuilder(args).ConfigureAppConfiguration(configBuilder =>
+if (args.Length == 1)
+{
+    if (args[0].ToLower() == "devices")
+    {
+        Console.WriteLine("Getting the list of all devices...");
+
+        foreach (var deviceData in BassVolumeService.GetDevices())
+        {
+            Console.WriteLine($"Name: \"{deviceData.Info.Name}\"; IsDefault: {deviceData.Info.IsDefault}; Type: {Enum.GetName(deviceData.Info.Type)}");
+        }
+    }
+    else if (args[0].ToLower() == "recorddevices")
+    {
+        Console.WriteLine("Getting the list of record devices...");
+
+        foreach (var deviceData in BassVolumeService.GetRecordDevices())
+        {
+            Console.WriteLine($"Name: \"{deviceData.Info.Name}\"; IsDefault: {deviceData.Info.IsDefault}; Type: {Enum.GetName(deviceData.Info.Type)}");
+        }
+    }
+
+    return;
+}
+
+var builder = Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((_, configBuilder) =>
 {
     configBuilder.Add(new JsonConfigurationSource
     {
-        Path = "appsettings.json"
+        Path = "./appsettings.json"
     });
+
+#if DEBUG_WIN || RELEASE_WIN
+    configBuilder.Add(new JsonConfigurationSource
+    {
+        Path = "./appsettings.WIN.json"
+    });
+#endif
+
+#if DEBUG_LINUX || RELEASE_LINUX
+    configBuilder.Add(new JsonConfigurationSource
+    {
+        Path = "./appsettings.LINUX.json"
+    });
+#endif
 });
 
 Log.Logger = new LoggerConfiguration()
@@ -30,6 +68,8 @@ builder.ConfigureServices((context, services) =>
 {
     services.Configure<VolumeCorrectorConfiguration>(
         context.Configuration.GetSection("VolumeCorrector"));
+    services.Configure<ManagedBassConfiguration>(
+        context.Configuration.GetSection("ManagedBass"));
 
     services.AddLogging(logBuilder =>
     {
@@ -42,120 +82,31 @@ builder.ConfigureServices((context, services) =>
         .AddSingleton<IVolumeMonitor, VolumeMonitor>()
         .AddSingleton<ICorrectionStrategy, MediumCorrectionStrategy>();
 
+    services.AddSingleton<ConsoleUserInterface>();
+
     services.AddHostedService<VolumeUpdateBackgroundService>();
 });
 
 var application = builder.Build();
 
 var volumeService = application.Services.GetRequiredService<IVolumeService>();
-volumeService.Initialize();
-
-var volumeMonitor = application.Services.GetRequiredService<IVolumeMonitor>();
-
 var logger = application.Services.GetRequiredService<ILogger<Program>>();
 
-var processCancellationTokenSource = new CancellationTokenSource();
-
-logger.LogInformation("Starting application.");
-
-await application.StartAsync();
-
-Console.Clear();
-
-Console.CursorTop = 5;
-Console.CursorLeft = 0;
-Console.CursorVisible = false;
-
-Console.WriteLine(" Commands:");
-Console.WriteLine(" Esc - Exit");
-Console.WriteLine(" e - Enable");
-Console.WriteLine(" d - Disable");
-Console.WriteLine(" ^ - Inc. max Volume");
-Console.WriteLine(" v - Dec. max Volume");
-Console.WriteLine(" > - Inc. max Loudness");
-Console.WriteLine(" < - Dec. max Loudness");
-
-#pragma warning disable CS4014
-Task.Run(async () =>
+try
 {
-    await UpdateConsoleInfo(processCancellationTokenSource.Token);
-});
-#pragma warning restore CS4014
+    await volumeService.InitializeAsync();
 
-while (true)
+    logger.LogInformation("Starting application.");
+
+    await application.StartAsync();
+}
+catch (Exception ex)
 {
-    var key = Console.ReadKey();
-
-    if (key.Key == ConsoleKey.Escape)
-    {
-        break;
-    }
-
-    if (key.Key == ConsoleKey.UpArrow)
-    {
-        volumeMonitor.MaxVolume = Math.Min(100, volumeMonitor.MaxVolume + 1);
-    } 
-    else if (key.Key == ConsoleKey.DownArrow)
-    {
-        volumeMonitor.MaxVolume = Math.Max(0, volumeMonitor.MaxVolume - 1);
-    }
-    else if (key.Key == ConsoleKey.LeftArrow)
-    {
-        volumeMonitor.MaxLoudness = Math.Max(0, volumeMonitor.MaxLoudness - 1);
-    }
-    else if (key.Key == ConsoleKey.RightArrow)
-    {
-        volumeMonitor.MaxLoudness = Math.Min(100, volumeMonitor.MaxLoudness + 1);
-    }
-    else if (key.Key == ConsoleKey.E)
-    {
-        volumeMonitor.Enabled = true;
-    }
-    else if (key.Key == ConsoleKey.D)
-    {
-        volumeMonitor.Enabled = false;
-    }
+    logger.LogCritical(ex, "Error during initialization.");
+    return;
 }
 
-volumeMonitor.Enabled = false;
-
-processCancellationTokenSource.Cancel();
+var consoleInterface = application.Services.GetRequiredService<ConsoleUserInterface>();
+consoleInterface.Start();
 
 logger.LogInformation("Application exit.");
-
-async Task UpdateConsoleInfo(CancellationToken token)
-{
-    while (!token.IsCancellationRequested)
-    {
-        try
-        {
-            var volume = (int)Math.Floor(volumeService.GetVolume() * 100);
-            var loudness = (int)Math.Floor(volumeService.GetLoudness() * 100);
-
-            Console.SetCursorPosition(0, 1);
-
-            var statusText = volumeMonitor.Enabled ? "Enabled" : "Disabled";
-            Console.WriteLine($" Status: {statusText}     ");
-            Console.WriteLine($" Max Volume: {volumeMonitor.MaxVolume} Max Loudness: {volumeMonitor.MaxLoudness}   ");
-            Console.WriteLine($" Volume: {volume} Loudness: {loudness}               ");
-
-            Console.SetCursorPosition(0, 13);
-            Console.WriteLine("     ");
-            Console.SetCursorPosition(0, 13);
-
-            await Task.Delay(TimeSpan.FromMilliseconds(300), token);
-        }
-        catch (TaskCanceledException)
-        {
-            // Do nothing
-        }
-        catch (OperationCanceledException)
-        {
-            // Do nothing
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error while updating console info.");
-        }
-    }
-}

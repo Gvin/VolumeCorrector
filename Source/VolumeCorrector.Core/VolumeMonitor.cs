@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using VolumeCorrector.Core.Configuration;
 
@@ -8,16 +9,19 @@ namespace VolumeCorrector.Core
     {
         private readonly IVolumeService _volumeService;
         private readonly ICorrectionStrategy _correctionStrategy;
+        private readonly ILogger<VolumeMonitor> _logger;
         private bool _enabled;
         private float? _storedSystemVolume;
 
         public VolumeMonitor(
             IVolumeService volumeService,
             ICorrectionStrategy correctionStrategy,
-            IOptions<VolumeCorrectorConfiguration> options)
+            IOptions<VolumeCorrectorConfiguration> options,
+            ILogger<VolumeMonitor> logger)
         {
             _volumeService = volumeService;
             _correctionStrategy = correctionStrategy;
+            _logger = logger;
             _storedSystemVolume = null;
 
             MaxVolume = options.Value.MaxVolume;
@@ -42,11 +46,16 @@ namespace VolumeCorrector.Core
                 {
                     if (_enabled)
                     {
+                        _logger.LogInformation("Enabling volume correction.");
                         _storedSystemVolume = _volumeService.GetVolume();
                     }
-                    else if (_storedSystemVolume.HasValue)
+                    else
                     {
-                        _volumeService.SetVolume(_storedSystemVolume.Value);
+                        _logger.LogInformation("Disabling volume correction.");
+                        if (_storedSystemVolume.HasValue)
+                        {
+                            _volumeService.SetVolume(_storedSystemVolume.Value);
+                        }
                     }
                 }
             }
