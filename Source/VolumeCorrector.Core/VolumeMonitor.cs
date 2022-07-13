@@ -11,7 +11,7 @@ namespace VolumeCorrector.Core
         private readonly ICorrectionStrategy _correctionStrategy;
         private readonly ILogger<VolumeMonitor> _logger;
         private bool _enabled;
-        private float? _storedSystemVolume;
+        private double? _storedSystemVolume;
 
         public VolumeMonitor(
             IVolumeService volumeService,
@@ -68,7 +68,7 @@ namespace VolumeCorrector.Core
                 var volume = _volumeService.GetVolume();
                 var loudness = _volumeService.GetLoudness();
 
-                var realMaxVolume = MaxVolume / 100f;
+                var realMaxVolume = MaxVolume / 100D;
                 var realMaxLoudness = MaxLoudness / 100f;
 
                 var targetVolume = _correctionStrategy.GetTargetVolume(volume, loudness, realMaxVolume, realMaxLoudness);

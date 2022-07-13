@@ -70,20 +70,29 @@ namespace VolumeCorrector.Bass
 
         public bool Initialized { get; private set; }
 
-        public float GetVolume()
+        public double GetVolume()
         {
-            return (float)ManagedBass.Bass.Volume;
+            var value = ManagedBass.Bass.Volume;
+
+            if (Math.Abs(value + 1D) < double.Epsilon) // Volume == -1
+            {
+                _logger.LogError("Bass error on getting volume: {ErrorCode}", Enum.GetName(ManagedBass.Bass.LastError));
+                throw new BassException(ManagedBass.Bass.LastError);
+            }
+
+            return value;
         }
 
-        public void SetVolume(float volume)
+        public void SetVolume(double volume)
         {
+            var value = Math.Max(0D, Math.Min(1D, volume));
             try
             {
-                ManagedBass.Bass.Volume = volume;
+                ManagedBass.Bass.Volume = value;
             }
             catch (BassException ex)
             {
-                _logger.LogError(ex, "Bass error on setting volume: {ErrorCode}", Enum.GetName(ex.ErrorCode));
+                _logger.LogError(ex, "Bass error on setting volume: {ErrorCode}. Value: {Value}", Enum.GetName(ex.ErrorCode), value);
                 throw;
             }
         }
@@ -95,6 +104,12 @@ namespace VolumeCorrector.Bass
 
         public void Dispose()
         {
+            if (_recordChannelId.HasValue)
+            {
+                ManagedBass.Bass.ChannelStop(_recordChannelId.Value);
+            }
+
+            ManagedBass.Bass.RecordFree();
             ManagedBass.Bass.Free();
         }
 

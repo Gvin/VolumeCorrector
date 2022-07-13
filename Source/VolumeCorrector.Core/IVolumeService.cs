@@ -6,9 +6,9 @@ namespace VolumeCorrector.Core
     {
         bool Initialized { get; }
 
-        float GetVolume();
+        double GetVolume();
 
-        void SetVolume(float volume);
+        void SetVolume(double volume);
 
         float GetLoudness();
 

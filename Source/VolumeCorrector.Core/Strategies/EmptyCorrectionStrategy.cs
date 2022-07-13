@@ -2,7 +2,7 @@
 {
     public class EmptyCorrectionStrategy : ICorrectionStrategy
     {
-        public float GetTargetVolume(float volume, float loudness, float maxVolume, float maxLoudness)
+        public double GetTargetVolume(double volume, float loudness, double maxVolume, float maxLoudness)
         {
             return volume;
         }

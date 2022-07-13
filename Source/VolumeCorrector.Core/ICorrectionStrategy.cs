@@ -2,6 +2,6 @@
 {
     public interface ICorrectionStrategy
     {
-        float GetTargetVolume(float volume, float loudness, float maxVolume, float maxLoudness);
+        double GetTargetVolume(double volume, float loudness, double maxVolume, float maxLoudness);
     }
 }
