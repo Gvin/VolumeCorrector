@@ -12,7 +12,6 @@ using VolumeCorrector.Core.Configuration;
 using VolumeCorrector.Core.Strategies;
 
 const string logMessageTemplate = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}";
-const string logFileName = "log.log";
 
 if (args.Length == 1)
 {
@@ -42,26 +41,27 @@ var builder = Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((_, conf
 {
     configBuilder.Add(new JsonConfigurationSource
     {
-        Path = "./appsettings.json"
+        Path = "appsettings.json"
     });
 
 #if DEBUG_WIN || RELEASE_WIN
     configBuilder.Add(new JsonConfigurationSource
     {
-        Path = "./appsettings.WIN.json"
+        Path = "appsettings.WIN.json"
     });
 #endif
 
 #if DEBUG_LINUX || RELEASE_LINUX
     configBuilder.Add(new JsonConfigurationSource
     {
-        Path = "./appsettings.LINUX.json"
+        Path = "appsettings.LINUX.json"
     });
 #endif
 });
 
+var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmm");
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.File(new MessageTemplateTextFormatter(logMessageTemplate), logFileName, LogEventLevel.Information)
+    .WriteTo.File(new MessageTemplateTextFormatter(logMessageTemplate), $"log_{timestamp}.log", LogEventLevel.Information)
     .CreateLogger();
 
 builder.ConfigureServices((context, services) =>

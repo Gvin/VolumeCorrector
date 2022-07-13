@@ -107,6 +107,7 @@ namespace VolumeCorrector.Bass
             if (_recordChannelId.HasValue)
             {
                 ManagedBass.Bass.ChannelStop(_recordChannelId.Value);
+                _recordChannelId = null;
             }
 
             ManagedBass.Bass.RecordFree();
